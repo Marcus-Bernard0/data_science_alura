@@ -1,32 +1,32 @@
-from flask import Flask
+
+from flask import Flask, request, jsonify
+from flask_basicauth import BasicAuth
 from textblob import TextBlob
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+import pickle
 
-# modelo de ML
-import pandas as pd
-url = 'https://raw.githubusercontent.com/alura-cursos/1576-mlops-machine-learning/aula-5/casas.csv'
-df = pd.read_csv(url)
-colunas = ['tamanho', 'preco']
-df = df[colunas]
-X = df.drop('preco', axis=1)
-y = df['preco']
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42)
-modelo = LinearRegression()
-modelo.fit(X_train, y_train)
+# importando o modelo gravado
+colunas = ['tamanho', 'ano', 'garagem']
+modelo = pickle.load(open('modelo.sav', 'rb'))
+
 app = Flask(__name__)
+app.config['BASIC_AUTH_USERNAME'] = 'marcus'
+app.config['BASIC_AUTH_PASSWORD'] = '123'
 
+basic_auth = BasicAuth(app)
 
 # definindo uma rota
+
+
 @app.route('/')
 def home():
-    return "Minha primeira API."
+    return "<h1>Minha primeira API.<h1>"
 
 # end point
 
 
 @app.route('/sentimento/<frase>')
+@basic_auth.required
 def sentimento(frase):
 
     tb = TextBlob(frase)
@@ -35,10 +35,14 @@ def sentimento(frase):
     return "O nivel de polaridade é de -1 a 1. (negativo: triste, positivo: Feliz. Sua Polaridade é: {}" .format(polaridade)
 
 
-@app.route('/cotacao/<int:tamanho>')
-def cotacao(tamanho):
-    preco = modelo.predict([[tamanho]])
-    return str(preco)
+@app.route('/cotacao/', methods=['POST'])
+@basic_auth.required
+def cotacao():
+    dados = request.get_json()
+    dados_input = [dados[col] for col in colunas]
+    preco = modelo.predict([dados_input])
+    return jsonify(preco=preco[0])
 
 
 app.run(debug=True)
+
