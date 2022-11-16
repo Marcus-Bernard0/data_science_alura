@@ -1,0 +1,4 @@
+v1
+{"path":"file:///home/marcus/Área%20de%20Trabalho/Clone%20GitHub/data_science_alura/24%20-%20streaming%20de%20dados/.%5Ccsv/part-00000-10f985ee-639f-4923-97c0-7fa904ccbea9-c000.csv","size":1238,"isDir":false,"modificationTime":1668631435454,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///home/marcus/Área%20de%20Trabalho/Clone%20GitHub/data_science_alura/24%20-%20streaming%20de%20dados/.%5Ccsv/part-00001-b8560b44-97c3-466c-b1b1-9b8c243034b5-c000.csv","size":3,"isDir":false,"modificationTime":1668631435506,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///home/marcus/Área%20de%20Trabalho/Clone%20GitHub/data_science_alura/24%20-%20streaming%20de%20dados/.%5Ccsv/part-00002-a1939856-77b5-4ed4-8f94-453636a4316b-c000.csv","size":14,"isDir":false,"modificationTime":1668631435482,"blockReplication":1,"blockSize":33554432,"action":"add"}
